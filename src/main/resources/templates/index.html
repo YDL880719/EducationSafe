@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安全生产教育培训系统</title>
+<!-- ================= Favicon ================== -->
+
+
+</head>
+
+<body>
+	<div id="wrapper">
+		<div th:include="leftnav"></div>
+
+
+
+		<div class="content-wrap">
+			<div class="main">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-8 p-r-0 title-margin-right">
+							<div class="page-header">
+								<div class="page-title">
+									<h1>
+										Hello, <span>欢迎使用本系统！</span>
+									</h1>
+								</div>
+							</div>
+						</div>
+						<!-- /# column -->
+						<div class="col-lg-4 p-l-0 title-margin-left">
+							<div class="page-header">
+								<div class="page-title">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="#">统计</a></li>
+										<li class="breadcrumb-item active">首页</li>
+									</ol>
+								</div>
+							</div>
+						</div>
+						<!-- /# column -->
+					</div>
+					<!-- /# row -->
+					<section id="main-content">
+						<div class="row" style="display: none;">
+							<div class="col-lg-3">
+								<div class="card">
+									<div class="stat-widget-one">
+										<div class="stat-icon dib">
+											<i class="ti-money color-success border-success"></i>
+										</div>
+										<div class="stat-content dib">
+											<div class="stat-text">Total Profit</div>
+											<div class="stat-digit">1,012</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="card">
+									<div class="stat-widget-one">
+										<div class="stat-icon dib">
+											<i class="ti-user color-primary border-primary"></i>
+										</div>
+										<div class="stat-content dib">
+											<div class="stat-text">New Customer</div>
+											<div class="stat-digit">961</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="card">
+									<div class="stat-widget-one">
+										<div class="stat-icon dib">
+											<i class="ti-layout-grid2 color-pink border-pink"></i>
+										</div>
+										<div class="stat-content dib">
+											<div class="stat-text">Active Projects</div>
+											<div class="stat-digit">770</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="card">
+									<div class="stat-widget-one">
+										<div class="stat-icon dib">
+											<i class="ti-link color-danger border-danger"></i>
+										</div>
+										<div class="stat-content dib">
+											<div class="stat-text">Referral</div>
+											<div class="stat-digit">2,781</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-8">
+
+								<div class="row">
+									<div class="col-lg-3"
+										style="max-width: 50%; flex: 0 0 50%; padding-top: 0px;">
+										<div class="card" id="container"></div>
+									</div>
+									<div class="col-lg-3"
+										style="max-width: 50%; flex: 0 0 50%; padding-top: 0px;">
+										<div class="card" id="container2"></div>
+									</div>
+								</div>
+								<div class="card" id="container3"></div>
+
+							</div>
+
+							<div class="col-lg-4" style="padding-top: 7.5px;">
+								<div class="card">
+									<div class="stat-widget-one">
+										<div class="stat-icon dib">
+											<i class="ti-alarm-clock color-primary border-primary"></i>
+										</div>
+										<div class="stat-content dib">
+											<div class=" card-title ">总在线学习时长：</div>
+											<div class="stat-digit" style="color: #dc3545;">19843万小时</div>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-title">
+										<h4>7日内参与学习人员：</h4>
+
+									</div>
+									<div class="row">
+
+										<div class="col-lg-3" style="max-width: 50%; flex: 0 0 50%;">
+
+											<div class="card-body">
+												<div class="stat-content dib">
+													<div class="stat-text">参与人数：</div>
+													<div class="stat-digit"
+														style="font-size: 24px; color: #373757;">39512人</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3" style="max-width: 50%; flex: 0 0 50%;">
+											<div class="card-body">
+												<div class="stat-content dib">
+													<div class="stat-text">占总人数：</div>
+													<div class="stat-digit"
+														style="font-size: 24px; color: #373757;">98%</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+
+										<div class="col-lg-3" style="max-width: 50%; flex: 0 0 50%;">
+
+											<div class="card-body">
+												<div class="stat-content dib">
+													<div class="stat-text">累计在线时长：</div>
+													<div class="stat-digit"
+														style="font-size: 24px; color: #373757;">78125小时</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3" style="max-width: 50%; flex: 0 0 50%;">
+											<div class="card-body">
+												<div class="stat-content dib">
+													<div class="stat-text">人均在线时长：</div>
+													<div class="stat-digit"
+														style="font-size: 24px; color: #373757;">1.98小时</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+
+										<div class="col-lg-3" style="max-width: 50%; flex: 0 0 50%;">
+
+											<div class="card-body">
+												<div class="stat-content dib">
+													<div class="stat-text">参与企业数：</div>
+													<div class="stat-digit"
+														style="font-size: 24px; color: #373757;">387个</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-3" style="max-width: 50%; flex: 0 0 50%;">
+											<div class="card-body">
+												<div class="stat-content dib">
+													<div class="stat-text">占总企业数：</div>
+													<div class="stat-digit"
+														style="font-size: 24px; color: #373757;">90%</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="stat-content dib">
+										<div class="row">
+											<div class="col-lg-8 p-r-0 title-margin-right"
+												style="padding-left: 0px;">
+												<div class="card-title">
+													30日未参与企业:<i style="font-size: 24px; color: #dc3545;">38家</i>
+												</div>
+
+											</div>
+											<!-- /# column -->
+											<div class="col-lg-4 p-l-0 title-margin-left"
+												style="text-align: right;">
+												<div class="card-title">
+													<a href="#">查看更多>></a>
+												</div>
+											</div>
+											<!-- /# column -->
+										</div>
+									</div>
+									<div class="card-body">
+										<p style="color: #dc3545;">宁夏**公司</p>
+										<p style="color: #dc3545;">石嘴山**公司</p>
+										<p style="color: #dc3545;">石嘴山**公司</p>
+										<p style="color: #dc3545;">石嘴山**公司</p>
+										<p style="color: #dc3545;">石嘴山**公司</p>
+										<p style="color: #dc3545;">石嘴山**公司</p>
+										<p style="color: #dc3545;">石嘴山**公司</p>
+										<p style="color: #dc3545;">宁夏**公司</p>
+										<p style="color: #dc3545;">石嘴山**公司</p>
+										<p style="color: #dc3545;">宁夏**公司</p>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-lg-3">
+								<div class="card p-0">
+									<div class="stat-widget-three home-widget-three">
+										<div class="stat-icon bg-facebook">
+											<i class="ti-pulse"></i>
+										</div>
+										<div class="stat-content">
+											<div class="stat-digit">周平均使用率前十名</div>
+										</div>
+										<div class="table-responsive">
+											<table class="table student-data-table m-t-20">
+												<thead>
+													<tr>
+														<th>排名</th>
+														<th>企业名称</th>
+														<th>平均使用率</th>
+														<th>名次浮动</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>石嘴山**公司</td>
+														<td>100%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>石嘴山**公司</td>
+														<td>99%</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>石嘴山**公司</td>
+														<td>98%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>4</td>
+														<td>石嘴山**公司</td>
+														<td>96%</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>5</td>
+														<td>石嘴山**公司</td>
+														<td>95%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>6</td>
+														<td>石嘴山**公司</td>
+														<td>93%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>7</td>
+														<td>石嘴山**公司</td>
+														<td>92%</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>8</td>
+														<td>石嘴山**公司</td>
+														<td>92%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>9</td>
+														<td>石嘴山**公司</td>
+														<td>91%</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>10</td>
+														<td>石嘴山**公司</td>
+														<td>91%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="card p-0">
+									<div class="stat-widget-three home-widget-three">
+										<div class="stat-icon bg-youtube">
+											<i class="ti-pulse"></i>
+										</div>
+										<div class="stat-content">
+											<div class="stat-digit">周平均使用率后十名</div>
+										</div>
+										<div class="table-responsive">
+											<table class="table student-data-table m-t-20">
+												<thead>
+													<tr>
+														<th>排名</th>
+														<th>企业名称</th>
+														<th>平均使用率</th>
+														<th>名次浮动</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>石嘴山**公司</td>
+														<td>0%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>石嘴山**公司</td>
+														<td>9%</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>石嘴山**公司</td>
+														<td>10%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>4</td>
+														<td>石嘴山**公司</td>
+														<td>12%</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>5</td>
+														<td>石嘴山**公司</td>
+														<td>13%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>6</td>
+														<td>石嘴山**公司</td>
+														<td>15%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>7</td>
+														<td>石嘴山**公司</td>
+														<td>16%</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>8</td>
+														<td>石嘴山**公司</td>
+														<td>18%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>9</td>
+														<td>石嘴山**公司</td>
+														<td>19%</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>10</td>
+														<td>石嘴山**公司</td>
+														<td>22%</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="card p-0">
+									<div class="stat-widget-three home-widget-three">
+										<div class="stat-icon bg-twitter">
+											<i class="ti-alarm-clock"></i>
+										</div>
+										<div class="stat-content">
+											<div class="stat-digit">周平均学习时长前十名</div>
+										</div>
+										<div class="table-responsive">
+											<table class="table student-data-table m-t-20">
+												<thead>
+													<tr>
+														<th>排名</th>
+														<th>企业名称</th>
+														<th>平均时长</th>
+														<th>名次浮动</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>石嘴山**公司</td>
+														<td>3.2h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>石嘴山**公司</td>
+														<td>3.1h</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>石嘴山**公司</td>
+														<td>3.0h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>4</td>
+														<td>石嘴山**公司</td>
+														<td>2.9h</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>5</td>
+														<td>石嘴山**公司</td>
+														<td>2.9h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>6</td>
+														<td>石嘴山**公司</td>
+														<td>2.8h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>7</td>
+														<td>石嘴山**公司</td>
+														<td>2.6h</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>8</td>
+														<td>石嘴山**公司</td>
+														<td>2.5h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>9</td>
+														<td>石嘴山**公司</td>
+														<td>2.5h</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>10</td>
+														<td>石嘴山**公司</td>
+														<td>2.4h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="card p-0">
+									<div class="stat-widget-three home-widget-three">
+										<div class="stat-icon bg-youtube">
+											<i class="ti-alarm-clock"></i>
+										</div>
+										<div class="stat-content">
+											<div class="stat-digit">周平均学习时长后十名</div>
+										</div>
+										<div class="table-responsive">
+											<table class="table student-data-table m-t-20">
+												<thead>
+													<tr>
+														<th>排名</th>
+														<th>企业名称</th>
+														<th>平均使用率</th>
+														<th>名次浮动</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>石嘴山**公司</td>
+														<td>0h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>2</td>
+														<td>石嘴山**公司</td>
+														<td>0h</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>3</td>
+														<td>石嘴山**公司</td>
+														<td>0.1h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>4</td>
+														<td>石嘴山**公司</td>
+														<td>0.1h</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>5</td>
+														<td>石嘴山**公司</td>
+														<td>0.2h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>6</td>
+														<td>石嘴山**公司</td>
+														<td>0.3h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>7</td>
+														<td>石嘴山**公司</td>
+														<td>0.4h</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>8</td>
+														<td>石嘴山**公司</td>
+														<td>0.5h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>9</td>
+														<td>石嘴山**公司</td>
+														<td>0.5h</td>
+														<td><i
+															class="ti-stats-down  color-primary border-primary"></i></td>
+													</tr>
+													<tr>
+														<td>10</td>
+														<td>石嘴山**公司</td>
+														<td>0.5h</td>
+														<td><i
+															class="ti-stats-up  color-primary border-primary"></i></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+
+						<div th:include="footer"></div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+	<script th:src="@{/assets/js/lib/highcharts/modules/highcharts.js}"></script>
+	<script th:src="@{/assets/js/lib/highcharts/modules/exporting.js}"></script>
+	<script type="text/javascript">
+		Highcharts
+				.chart(
+						'container',
+						{
+							chart : {
+								plotBackgroundColor : null,
+								plotBorderWidth : null,
+								plotShadow : false,
+								type : 'pie'
+							},
+							title : {
+								text : '本周参与学习人员比例'
+							},
+							tooltip : {
+								pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+							},
+							plotOptions : {
+								pie : {
+									allowPointSelect : true,
+									cursor : 'pointer',
+									dataLabels : {
+										enabled : true,
+										format : '<b>{point.name}</b>: {point.percentage:.1f} %',
+										style : {
+											color : (Highcharts.theme && Highcharts.theme.contrastTextColor)
+													|| 'black'
+										}
+									}
+								}
+							},
+							series : [ {
+								name : 'Brands',
+								colorByPoint : true,
+								data : [ {
+									name : '参与人员',
+									y : 88.41,
+									sliced : true,
+									selected : true
+								}, {
+									name : '未参与人员',
+									y : 11.59
+								} ]
+							} ]
+						});
+		Highcharts
+				.chart(
+						'container2',
+						{
+							chart : {
+								plotBackgroundColor : null,
+								plotBorderWidth : null,
+								plotShadow : false,
+								type : 'pie'
+							},
+							title : {
+								text : '本周参与学习企业比例'
+							},
+							tooltip : {
+								pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+							},
+							plotOptions : {
+								pie : {
+									allowPointSelect : true,
+									cursor : 'pointer',
+									dataLabels : {
+										enabled : true,
+										format : '<b>{point.name}</b>: {point.percentage:.1f} %',
+										style : {
+											color : (Highcharts.theme && Highcharts.theme.contrastTextColor)
+													|| 'black'
+										}
+									}
+								}
+							},
+							series : [ {
+								name : 'Brands',
+								colorByPoint : true,
+								data : [ {
+									name : '参与企业',
+									y : 70.5,
+									sliced : true,
+									selected : true
+								}, {
+									name : '未参与企业',
+									y : 29.5
+								} ]
+							} ]
+						});
+		var chart = Highcharts
+				.chart(
+						'container3',
+						{
+							chart : {
+								zoomType : 'xy'
+							},
+							title : {
+								text : '本周学习情况'
+							},
+							subtitle : {
+								text : '数据来源: 安全生产培训系统'
+							},
+							xAxis : [ {
+								categories : [ '星期一', '星期二', '星期三', '星期四',
+										'星期五', '星期六', '星期日' ],
+								crosshair : true
+							} ],
+							yAxis : [
+									{ // Primary yAxis
+										labels : {
+											format : '{value}人',
+											style : {
+												color : Highcharts.getOptions().colors[1]
+											}
+										},
+										title : {
+											text : '人',
+											style : {
+												color : Highcharts.getOptions().colors[1]
+											}
+										}
+									},
+									{ // Secondary yAxis
+										title : {
+											text : '平均在线时长',
+											style : {
+												color : Highcharts.getOptions().colors[0]
+											}
+										},
+										labels : {
+											format : '{value} h',
+											style : {
+												color : Highcharts.getOptions().colors[0]
+											}
+										},
+										opposite : true
+									} ],
+							tooltip : {
+								shared : true
+							},
+							legend : {
+								layout : 'vertical',
+								align : 'left',
+								x : 120,
+								verticalAlign : 'top',
+								y : 100,
+								floating : true,
+								backgroundColor : (Highcharts.theme && Highcharts.theme.legendBackgroundColor)
+										|| '#FFFFFF'
+							},
+							series : [
+									{
+										name : '平均在线时长',
+										type : 'column',
+										yAxis : 1,
+										data : [ 1.2, 1.5, 2.1, 1.6, 2.3, 1.1,
+												1.6 ],
+										tooltip : {
+											valueSuffix : ' h'
+										}
+									},
+									{
+										name : '人数',
+										type : 'spline',
+										data : [ 5000, 3500, 4522, 6700, 5900,
+												4568, 6005 ],
+										tooltip : {
+											valueSuffix : '人'
+										}
+									} ]
+						});
+	</script>
+</body>
+
+</html>

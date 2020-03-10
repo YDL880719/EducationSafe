@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+
+<title>国家安全生产宣教培训平台</title>
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+
+<!-- global stylesheets -->
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/css/font-icon-style.css}">
+<link rel="stylesheet" th:href="@{/css/style.default.css}"
+	id="theme-stylesheet">
+
+<!-- Core stylesheets -->
+<link rel="stylesheet" th:href="@{/css/pages/login.css}">
+</head>
+
+<body>
+
+	<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+	<section class="hero-area">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 ">
+					<div class="contact-h-cont">
+						<h3 class="text-center">
+							<img th:src="@{/img/logo.png}" class="img-fluid" alt="">
+						</h3>
+						<br>
+						<form autocomplete="off" id="form2" name="form2" action="login"
+							method="post">
+							<div class="form-group">
+								<label for="username">用户名</label> <input type="text"
+									class="form-control" id="userAccount" name="userAccount"
+									placeholder="请输入系统账号……">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail1">密码</label> <input
+									class="form-control" type="password" value="" id="userPassword"
+									name="userPassword" placeholder="请输入密码……">
+							</div>
+							<button class="btn btn-general btn-blue" role="button"
+								onclick="login()">
+								<i fa fa-right-arrow></i>登录
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!--Global Javascript -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/tether.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script  th:inline="javascript">
+	var error = [[${error}]];
+	$(document).ready(function () { 
+		if(error!=null){
+			alert(error);
+		}
+		
+	});
+		function login() {
+			var userName = $('#userAccount').val();
+			if (userName == '') {
+				alert("请输入用户名。");
+				return;
+			}
+			var userPassword = $('#userPassword').val();
+			if (userPassword == '') {
+				alert("请输入密码。");
+				return;
+			}
+			if ((userName != '' && userName.length >0)&& (userPassword != '' && userPassword.length >0)) {
+				console.log(userName+"---"+userPassword);
+				login2();
+			}
+			
+		}
+		function login2() {
+			//alert("专家登录");
+			document.form2.action = '/admin/login';
+			document.form2.submit();
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+
+<link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+
+<body>
+	<div th:include="headerdiv"></div>
+	<div th:include="leftnav"></div>
+	<div class="content-inner chart-cont">
+
+
+		<!--***** CONTENT *****-->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card form" id="form2">
+					<div class="card-header">
+						<h3>基本信息</h3>
+					</div>
+					<br> <input type="hidden" id="checkId" name="checkId"
+						th:value="${usercheckinfo.checkId}" />
+						<input type="hidden" id="userIdstr" name="userIdstr"
+						th:value="${usercheckinfo.userId}" />
+					<form action="" autocomplete="off" id="usercheckSave">
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group row">
+									<label for="example-datetime-local-input" style="width: 100px;"
+										class=" col-form-label">所属企业</label>
+									<div class="col-9">
+										<select data-placeholder="省" id="companyId" name="companyId"
+											class="form-control" style="width: 50%; float: left;"
+											onchange="javascript:provicechoose()">
+											<option value="0">请选择</option>
+											<option th:each="type:${companylist}"
+												th:selected="${type.companyId == usercheckinfo.companyId}"
+												th:value="${type.companyId}" th:text="${type.companyName}"></option>
+										</select> <select data-placeholder="用户" id="county" name="userId"
+											class="form-control" style="width: 50%; float: left;">
+
+
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-search-input" style="width: 100px;"
+										class=" col-form-label">开始时间</label>
+									<div class="col-9">
+										<input class="form-control" type="date" name="userStartTime" id="userStartTime"
+											th:value="${usercheckinfo.userStartTime }">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-search-input" style="width: 100px;"
+										class=" col-form-label">用户状态</label>
+									<div class="col-9">
+										<input class="form-control" type="text" readonly
+											th:value="${usercheckinfo.userCheckStatus == 0 ?'未认证':(usercheckinfo.userCheckStatus == 1 ?'未注册':(usercheckinfo.userCheckStatus == 2 ?'已注册':'未认证'))}">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group row">
+									<label for="example-search-input" style="width: 120px;"
+										class=" col-form-label">TV盒子MAC地址</label>
+									<div class="col-9">
+										<input class="form-control" type="text" name="userMac"
+											onkeyup="value=value.replace(/[^A-Z,:,0-9,a-z]/g,'')"
+											style = "text-transform: uppercase;"
+											placeholder="TV盒子MAC地址(英文状态下的输入字母大写)例如：AB:CD:EF:GH:IJ:KL" th:value="${usercheckinfo.userMac}"
+											id="userMac">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-search-input" style="width: 120px;"
+										class=" col-form-label">结束时间</label>
+									<div class="col-9">
+										<input class="form-control" type="date"  name="userEndTime" id="userEndTime"
+											th:value="${usercheckinfo.userEndTime}">
+									</div>
+								</div>
+							</div>
+						</div>
+						<button type="button" onclick="Saveusercheck()"
+							class="btn btn-general btn-blue mr-2">提交</button>
+						<button type="reset" class="btn btn-general btn-white"
+							onclick="window.history.go(-1);">返回</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script th:inline="javascript">
+	  var userIdstr = $("input[name='userIdstr']").val(); 
+
+		$(document).ready(function() {
+			
+			if(userIdstr!=null&&userIdstr!=''){
+				
+				$.ajax({
+					url : "../usercheckinfo/getUserList?companyId="
+							+ $("#companyId").val(),
+					type : "post",
+					processData : false,
+					contentType : false,
+					success : function(msg) {
+						$("#county").empty();
+						$("#county").append("<option value=''>请选择</option>");
+						for (i = 0; i < msg.length; i++) {
+							var dict = msg[i];
+							$("#county").append(
+									"<option value='"+dict.userId+"'>"
+											+ dict.userName + "</option>");
+						}
+						$("#county").val(userIdstr);
+					},
+					error : function() {
+						alert("系统异常！");
+					}
+				});
+				
+			}
+		});
+		function Saveusercheck() {
+			var formData = new FormData($("#usercheckSave")[0]);
+			var urlstr = "../usercheckinfo/doSaveusercheck";
+			var mid = $("#checkId").val();
+			if (mid.length > 0) {
+				urlstr = "../usercheckinfo/doUpdateusercheck";
+				formData.append("checkId", mid);
+			} else {
+				urlstr = "../usercheckinfo/doSaveusercheck";
+			}
+
+			$
+					.ajax({
+						url : urlstr,
+						type : "post",
+						data : formData,
+						async : false,
+						cache : false,
+						contentType : false,
+						processData : false,
+						dataType : 'json',
+						success : function(msg) {
+							if (msg.code == 500) {
+								//表示失败
+								alert("操作失败！");
+							} else {
+								self.location = '../usercheckinfo/loadUsercheckinfoList_0_0_0';
+							}
+						},
+						error : function() {
+							alert("系统异常！");
+						}
+					});
+		}
+		function provicechoose() {
+			$.ajax({
+				url : "../usercheckinfo/getUserList?companyId="
+						+ $("#companyId").val(),
+				type : "post",
+				processData : false,
+				contentType : false,
+				success : function(msg) {
+					$("#county").empty();
+					$("#county").append("<option value=''>请选择</option>");
+					for (i = 0; i < msg.length; i++) {
+						var dict = msg[i];
+						$("#county").append(
+								"<option value='"+dict.userId+"'>"
+										+ dict.userName + "</option>");
+					}
+				},
+				error : function() {
+					alert("系统异常！");
+				}
+			});
+
+		}
+	</script>
+
+</body>
+
+
+</html>

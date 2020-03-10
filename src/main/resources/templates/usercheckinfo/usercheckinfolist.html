@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+
+</head>
+
+<body>
+	<div th:include="headerdiv"></div>
+	<div th:include="leftnav"></div>
+	<div class="content-inner chart-cont">
+
+		<!--***** INLINE FORM *****-->
+		<div class="card form" style="padding: 10px;" id="form6">
+			<form autocomplete="off" class="form-inline"
+				action="loadUsercheckinfoList_0_0_0" method="post">
+				<select data-placeholder="" id="userCheckStatus"
+					name="userCheckStatus" class="custom-select mb-2 mr-sm-2 mb-sm-0">
+					<option value="0" th:selected="${0 == data.userCheckStatus}">未认证</option>
+					<option value="1" th:selected="${1 == data.userCheckStatus}">未注册</option>
+					<option value="2" th:selected="${2 == data.userCheckStatus}">已注册</option>
+
+				</select> <input class="form-control" type="text" name="userMac"
+					onkeyup="value=value.replace(/[^A-Z,:,0-9]/g,'')"
+					placeholder="TV盒子MAC地址(英文状态下的输入字母大写)" th:value="${data.userMac}"
+					id="userMac">例如：AB:CD:EF:GH:IJ:KL <select
+					data-placeholder="省" id="companyId" name="companyId"
+					class="custom-select mb-2 mr-sm-2 mb-sm-0">
+					<option value="">所属企业</option>
+					<option th:each="type:${companylist}" th:value="${type.companyId}"
+						th:selected="${type.companyId == data.companyId}"
+						th:text="${type.companyName}"></option>
+				</select>
+				<!--  <label class="mr-sm-2" for="inlineFormCustomSelect">企业种类</label>
+                            <select class="custom-select mb-2 mr-sm-2 mb-sm-0"  id="inlineFormCustomSelect">
+                                <option selected>请选择</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select> -->
+				<button type="submit" class="btn btn-general btn-blue ">搜索</button>
+			</form>
+		</div>
+		<div class=" tenth-button ">
+
+			<a th:href="@{../usercheckinfo/usercheckinfoAdd}"
+				class="btn btn-lg blue">新增认证</a>
+		</div>
+		<!--***** CONTENT *****-->
+		<div class="row">
+			<table class="table table-hover">
+				<thead>
+					<tr class="bg-info text-white">
+						<th width="2%">序号</th>
+						<th width="10%">企业名称</th>
+						<th width="5%">用户名称</th>
+						<th width="5%">Mac地址</th>
+						<th width="5%">认证状态</th>
+						<th width="7%">有效期</th>
+						<th width="5%">费用</th>
+						<th width="20%">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="usercheck,index: ${list}">
+						<td th:text="${index.count}"></td>
+						<td th:text="${usercheck.companyName}"></td>
+						<td th:text="${usercheck.userName}"></td>
+						<td th:text="${usercheck.userMac}"></td>
+						<td
+							th:text="${usercheck.userCheckStatus == 0 ?'未认证':(usercheck.userCheckStatus == 1 ?'未注册':(usercheck.userCheckStatus == 2 ?'已注册':'未认证'))}"></td>
+
+						<td
+							th:text="${(usercheck.userStartTime + '~'+ usercheck.userEndTime )}"></td>
+
+						<td
+							th:text="${(usercheck.userStartTime <= #dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd') and #dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd') <= usercheck.userEndTime )? '正常':'待续费'}"></td>
+						<td><a class="btn btn-outline-primary"
+							style="max-width: 75px;"
+							th:href="@{'../usercheckinfo/usercheckUpdate?checkId='+${usercheck.checkId}}"><i
+								class="fa  fa-pencil"></i>修改</a> <a class="btn btn-outline-danger"
+							style="max-width: 75px;" href="javascript:void(0)"
+							th:onclick="'javascript:showusercheckToDel('+'\''+${usercheck.checkId}+'\''+');'">
+								<i class="fa fa-times  "></i>删除
+						</a> <a class="btn btn-outline-info"
+							th:if="${usercheck.userCheckStatus == 0 || usercheck.userCheckStatus == null}"
+							style="max-width: 75px;" href="javascript:void(0)"
+							th:onclick="'javascript:showusercheckToUpdate('+'\''+${usercheck.checkId}+'\''+',1);'">
+								<i class="fa fa-check-circle-o  "></i>认证
+						</a> <a class="btn btn-outline-warning"
+							th:if="${usercheck.userCheckStatus == 1}"
+							style="max-width: 75px;" href="javascript:void(0)"
+							th:onclick="'javascript:showusercheckToUpdate('+'\''+${usercheck.checkId}+'\''+',2);'">
+								<i class="fa fa-registered  "></i>注册
+						</a> 
+						 
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="13">
+							<ul id="pageHTML" class="pagination pull-right"></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+
+	</div>
+
+
+	<script th:inline="javascript">
+	    var pageHTML = [[${pageHTML}]];
+	   /*  console.log(pageHTML); */
+		$(document).ready(function () {
+			$("#pageHTML").html(pageHTML);
+		});
+		function showusercheckToDel(qid) {
+		    if (confirm("确定删除此条信息?")) {
+		        $.ajax({
+		            url: "../usercheckinfo/doDelusercheck?checkId="+qid,
+		            type: "post",
+		          
+		            processData: false,
+		            contentType: false,
+		            success: function(msg) {
+		                if (msg.code == 500) {
+		                    //表示失败
+		                    alert("删除信息失败！");
+		                } else {
+		                	 self.location = '../usercheckinfo/loadUsercheckinfoList_0_0_0';
+		                }
+
+		            },
+		            error: function() {
+		                alert("系统异常！");
+		            }
+		        });
+		    }
+		}
+		function showusercheckToUpdate(qid,userCheckStatus){
+			if (confirm("确定操作信息?")) {
+		        $.ajax({
+		            url: "../usercheckinfo/doUpdateusercheck?checkId="+qid+"&userCheckStatus="+userCheckStatus,
+		            type: "post",
+		            processData: false,
+		            contentType: false,
+		            success: function(msg) {
+		                if (msg.code == 500) {
+		                    //表示失败
+		                    alert("更新信息失败！");
+		                } else {
+		                	 self.location = '../usercheckinfo/loadUsercheckinfoList_0_0_0';
+		                }
+
+		            },
+		            error: function() {
+		                alert("系统异常！");
+		            }
+		        });
+		    }
+		}
+
+</script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+
+<link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+
+<body>
+	<div th:include="headerdiv"></div>
+	<div th:include="leftnav"></div>
+	<div class="content-inner chart-cont">
+
+
+		<!--***** CONTENT *****-->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card form" id="form2">
+					<div class="card-header">
+						<h3>基本信息</h3>
+					</div>
+					<br> <input type="hidden" id="menuId" name="menuId"
+						th:value="${menuinfo.menuId}" />
+					<form action="" autocomplete="off" id="menuSave">
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group row">
+									<label for="example-text-input" style="width: 85px;"
+										class=" col-form-label">菜单名称</label>
+									<div class="col-9">
+										<input class="form-control" type="text"
+											th:value="${menuinfo.menuName}" name="menuName" id="menuName"
+											placeholder="请输入菜单名称……">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-search-input" style="width: 85px;"
+										class=" col-form-label">排序</label>
+									<div class="col-9">
+										<input class="form-control" type="number" name="menuSort"
+											th:value="${menuinfo.menuSort}" id="menuSort">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-email-input" style="width: 85px;"
+										class=" col-form-label">是否可用</label>
+									<div class="col-9">
+										<select class="form-control" id="isTrue" name="isTrue">
+											<option value="0" th:selected="${menuinfo.isTrue == 0}">否</option>
+											<option value="1" th:selected="${menuinfo.isTrue == 1}">是</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group row">
+									<label for="example-datetime-local-input" style="width: 85px;"
+										class=" col-form-label">层级</label>
+									<div class="col-9">
+										<select class="form-control" id="menuLevel" name="menuLevel">
+											<option value="1" th:selected="${menuinfo.menuLevel == 1}">1</option>
+											<option value="2" th:selected="${menuinfo.menuLevel == 2}">2</option>
+											<option value="3" th:selected="${menuinfo.menuLevel == 3}">3</option>
+											<option value="4" th:selected="${menuinfo.menuLevel == 4}">4</option>
+											<option value="5" th:selected="${menuinfo.menuLevel == 5}">5</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-month-input" style="width: 85px;"
+										class=" col-form-label">顶级</label>
+									<div class="col-9">
+										<select class="form-control " id="menuTop" name="menuTop" onchange="javascript:menuTopchoose()">
+											<option value="-1">顶级</option>
+											<option th:each="menu:${menulist}"
+												th:selected="${menuinfo.menuTop == menu.menuId}"
+												th:value="${menu.menuId}" th:text="${menu.menuName }"></option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="example-date-input" style="width: 85px;"
+										class=" col-form-label">父级</label>
+									<div class="col-9"  >
+										<select data-placeholder="一级分类" name="menuParent" id="menuTop2"
+											class="form-control" style="width: 50%; float: left;" onchange="javascript:provicechoose()">
+											<option value="-1">顶级</option>
+											<option th:each="menu:${menulist}" th:value="${menu.menuId}"
+												th:text="${menu.menuName }"></option>
+										</select> <select data-placeholder="二级" id="city" name="menuParent"
+											class="form-control "  style="width: 50%; float: left;"
+											onchange="javascript:citychoose()">
+											<option value='-1'>顶级</option>
+										</select> <!-- <select class="form-control" id="menuParent"
+											name="menuParent">
+											<option value="-1">顶级</option>
+											<option th:each="menu:${menulist}"
+												th:selected="${menuinfo.menuParent == menu.menuId}"
+												th:value="${menu.menuId}" th:text="${menu.menuName }"></option>
+										</select> -->
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<button type="button" onclick="SaveMenu()"
+							class="btn btn-general btn-blue mr-2">提交</button>
+						<button type="reset" class="btn btn-general btn-white"
+							onclick="window.history.go(-1);">返回</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script th:inline="javascript">
+	    var pageHTML = [[${menuinfo}]];
+	    
+		function showQuestionToDel(qid) {
+		    if (confirm("确定删除此条信息?")) {
+		        $.ajax({
+		            url: "../Question/doQuestionDel?questionId="+qid,
+		            type: "post",
+		          
+		            processData: false,
+		            contentType: false,
+		            success: function(msg) {
+		                if (msg.code == 500) {
+		                    //表示失败
+		                    alert("删除信息失败！");
+		                } else {
+		                	 self.location = '../Question/loadQuestioninfoList_0_0_0';
+		                }
+
+		            },
+		            error: function() {
+		                alert("系统异常！");
+		            }
+		        });
+		    }
+		}
+		function SaveMenu() {
+		    var formData = new FormData($("#menuSave")[0]);
+		    var urlstr = "../menuinfo/doSaveMenu";
+		    var mid = $("#menuId").val();
+		    if(mid .length >0){
+		    	urlstr = "../menuinfo/doUpdateMenu";
+		    	formData.append("menuId",mid);
+		    }else{
+		    	urlstr = "../menuinfo/doSaveMenu";
+		    }
+		    
+		    $.ajax({
+		        url: urlstr,
+		        type: "post",
+		        data: formData,
+		        async: false,
+		        cache: false,
+		        contentType: false,
+		        processData: false,
+		        dataType: 'json',
+		        success: function(msg) {
+		        	 if (msg.code == 500) {
+		                    //表示失败
+		                    alert("操作失败！");
+		                } else {
+		                	 self.location = '../menuinfo/loadMenuinfoList_0_0_0';
+		                }
+		        },
+		        error: function() {
+		            alert("系统异常！");
+		        }
+		    });
+		}
+		
+		function provicechoose() {
+			$("#menuTop").val($("#menuTop2").val());
+			$.ajax({
+				url : "../menuinfo/getMenuinfoNext?menuParent="
+						+ $("#menuTop2").val(),
+				type : "post",
+				processData : false,
+				contentType : false,
+				success : function(msg) {
+					$("#city").empty();
+					$("#city").append("<option value=''>请选择</option>");
+					for (i = 0; i < msg.length; i++) {
+						var dict = msg[i];
+						/* th:value="${menu.menuId}" th:text="${menu.menuName }" */
+						$("#city").append(
+								"<option value='" + dict.menuId + "'>"
+										+ dict.menuName + "</option>");
+					}
+					if(pageHTML != null && pageHTML !=''){
+						$("#city").val(pageHTML.menuParent);
+					}
+				},
+				error : function() {
+					alert("系统异常！");
+				}
+			});
+
+		}
+		function menuTopchoose(){
+			$("#menuTop2").val($("#menuTop").val());
+			provicechoose();
+		}
+		menuTopchoose();
+		provicechoose();
+</script>
+
+</body>
+
+
+</html>

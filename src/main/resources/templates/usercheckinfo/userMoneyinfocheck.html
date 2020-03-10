@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+
+<link rel="stylesheet" th:href="@{/css/form.css}">
+</head>
+
+<body>
+	<div th:include="headerdiv"></div>
+	<div th:include="leftnav"></div>
+	<div class="content-inner chart-cont">
+
+
+		<!--***** CONTENT *****-->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card form" id="form2">
+					<div class="card-header">
+						<h3>TV盒子基本信息</h3>
+					</div>
+					<br> <input type="hidden" id="checkId" name="checkId"
+						th:value="${usercheckinfo.checkId}" /> <input type="hidden"
+						id="userIdstr" name="userIdstr" th:value="${usercheckinfo.userId}" />
+					<input type="hidden" id="uMoneyId" name="uMoneyId"
+						th:value="${usermoneyinfo.uMoneyId}" />
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label for="example-datetime-local-input" style="width: 100px;"
+									class=" col-form-label">所属企业：</label>
+								<div class="col-9">
+									<label class="col-form-label" type="text"
+										th:each="type:${companylist}"
+										th:if="${type.companyId == usercheckinfo.companyId }"
+										th:text="${type.companyName +' - '}"></label> <input
+										name="companyId" style="display: none;"
+										th:value="${usercheckinfo.companyId}" id="companyId">
+									<label class="col-form-label" type="text" id="county"
+										name="userId"></label>
+
+
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-search-input" style="width: 100px;"
+									class=" col-form-label">有效期：</label>
+								<div class="col-9">
+									<label class="col-form-label" type="text"
+										th:text="${usercheckinfo.userStartTime +' ~ '+usercheckinfo.userEndTime}"></label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-datetime-local-input" style="width: 100px;"
+									class=" col-form-label">账户总金额：</label>
+								<div class="col-9">
+									<label class="col-form-label" type="text"
+										th:text="${usermoneyinfo.accountBalance==null?0+'￥':usermoneyinfo.accountBalance+'￥'}"></label>
+								</div>
+							</div>
+
+
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label for="example-search-input" style="width: 120px;"
+									class=" col-form-label">TV盒子MAC地址:</label>
+								<div class="col-9">
+									<label class="col-form-label" type="text"
+										th:text="${usercheckinfo.userMac}" id="userMac"></label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-search-input" style="width: 100px;"
+									class=" col-form-label">用户状态：</label>
+								<div class="col-9">
+									<label class="col-form-label" type="text"
+										th:text="${usercheckinfo.userCheckStatus == 0 ?'未认证':(usercheckinfo.userCheckStatus == 1 ?'未注册':(usercheckinfo.userCheckStatus == 2 ?'已注册':'未认证'))}"></label>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-search-input" style="width: 100px;"
+									class=" col-form-label">用户身份：</label>
+								<div class="col-9">
+									<label class="col-form-label" type="text" readonly
+										th:text="${usermoneyinfo.isVIP == null ?'普通用户':(usermoneyinfo.isVIP == 0 ?'普通用户':'VIP 用户')}"></label>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--***** CONTENT *****-->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card form" id="form2">
+					<div class="card-header">
+						<h3>指定授权的资源信息</h3>
+					</div>
+					<br>
+					
+					<div class="row">
+					
+						<table class="table table-hover">
+							<thead>
+								<tr class="bg-info text-white">
+									<th width="1%"><input type="checkbox" name="ids" id="ids"
+										onchange="checkAll()" /></th>
+									<th width="1%">序号</th>
+									<th width="5%">资源名称</th>
+									<th width="5%">精品课</th>
+									<th width="5%">VIP课程</th>
+									<th width="5%">可用</th>
+									<th width="5%">是否可播放可用</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="resources,index: ${relistre}">
+									<td><input type="checkbox" name="resourcesId"
+										th:value="${resources.resourcesId}" id="resourcesId" /></td>
+									<td th:text="${index.count}"></td>
+									<td th:text="${resources.resourcesName}"></td>
+									<td th:text="${resources.isBestResources == 0 ?'否':'是'}"></td>
+									<td th:text="${resources.isVIP == 0 ?'否':'是'}"></td>
+									<td th:text="${resources.isTrue == 0 ?'否':'是'}"></td>
+									<td th:text="${resources.isUserCan == 0 ?'否':'是'}"></td>
+								</tr>
+							</tbody>
+
+						</table>
+						<button type="button" onclick="Saveusermoney()"
+						class="btn btn-general btn-blue mr-2">取消</button>
+					</div>
+				</div>
+
+			</div>
+
+
+		</div>
+
+		<script th:inline="javascript">
+			$("#city").multiselect({
+				noneSelectedText : "请选择二级",
+				checkAllText : "全选",
+				uncheckAllText : '全不选',
+				selectedList : 2
+			});
+			$("#county2").multiselect({
+				noneSelectedText : "请选择三级",
+				checkAllText : "全选",
+				uncheckAllText : '全不选',
+				selectedList : 2
+			});
+			var userIdstr = $("input[name='userIdstr']").val();
+
+			$(document).ready(
+					function() {
+
+						if (userIdstr != null && userIdstr != '') {
+
+							$.ajax({
+								url : "../usercheckinfo/getUserList?companyId="
+										+ $("#companyId").val(),
+								type : "post",
+								processData : false,
+								contentType : false,
+								success : function(msg) {
+									for (i = 0; i < msg.length; i++) {
+										var dict = msg[i];
+										if (dict.userId == userIdstr) {
+											$("#county").text(dict.userName);
+										}
+
+									}
+								},
+								error : function() {
+									alert("系统异常！");
+								}
+							});
+
+						}
+					});
+			
+
+			function Saveusermoney() {
+				var resourcesIds = new Array();
+				$('input[name="resourcesId"]:checked').each(function() {
+					resourcesIds.push($(this).val());
+				});
+
+				var formData = new FormData($("#usermoneyinfo")[0]);
+				var urlstr = "../usermoneylog/doUpdateUsermoneylog";
+				var mid = $("#checkId").val();
+				var umid = $("#uMoneyId").val();
+				var uid = $("#userIdstr").val();
+				formData.append("userId", uid);
+				formData.append("checkId", mid);
+				formData.append("uMoneyId", umid);
+				formData.append("categoryId", resourcesIds.join(','));
+	
+
+				$
+						.ajax({
+							url : urlstr,
+							type : "post",
+							data : formData,
+							async : false,
+							cache : false,
+							contentType : false,
+							processData : false,
+							dataType : 'json',
+							success : function(msg) {
+								if (msg.code == 500) {
+									//表示失败
+									alert("操作失败！");
+								} else {
+									self.location = '../usercheckinfo/userMoneyinfocheck?checkId='
+											+ mid;
+								}
+							},
+							error : function() {
+								alert("系统异常！");
+							}
+						});
+			}
+			function checkAll() {
+				var ischecked = $("#ids").is(":checked");
+				var ids = document.getElementsByName("resourcesId");
+				for (i = 0; i < ids.length; i++) {
+					ids[i].checked = ischecked;
+				}
+
+			}
+		</script>
+</body>
+
+
+</html>

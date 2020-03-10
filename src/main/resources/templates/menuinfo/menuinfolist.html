@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+
+</head>
+
+<body>
+	<div th:include="headerdiv"></div>
+	<div th:include="leftnav"></div>
+	<div class="content-inner chart-cont">
+
+		<!--***** INLINE FORM *****-->
+		<div class="card form" style="padding: 10px;" id="form6">
+			<form autocomplete="off" class="form-inline"
+				action="loadMenuinfoList_0_0_0" method="post">
+				<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0"
+					id="menuName" name="menuName" th:value="${data.menuName}"
+					placeholder="请输入菜单名称……">
+			
+				<select data-placeholder="一级分类" name="menuTop" id="menuTop"
+					class="form-control" onchange="javascript:provicechoose()">
+					<option value="">请选择</option>
+					<option th:each="menu:${menulist}" th:value="${menu.menuId}"
+						th:text="${menu.menuName }"></option>
+				</select> <select data-placeholder="二级" id="city" name="menuParent"
+					class="form-control   mb-2 mr-sm-2 mb-sm-0" onchange="javascript:citychoose()">
+					<option value=''>请选择</option>
+				</select> 
+				<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="menuLevel"
+					name="menuLevel">
+					<option value="">请选择层级</option>
+					<option value="1" th:selected="${data.menuLevel == 1}">1</option>
+					<option value="2" th:selected="${data.menuLevel == 2}">2</option>
+					<option value="3" th:selected="${data.menuLevel == 3}">3</option>
+					<option value="4" th:selected="${data.menuLevel == 4}">4</option>
+					<option value="5" th:selected="${data.menuLevel == 5}">5</option>
+				</select>
+				<!--  <label class="mr-sm-2" for="inlineFormCustomSelect">菜单种类</label>
+				
+                             -->
+				<button type="submit" class="btn btn-general btn-blue ">搜索</button>
+			</form>
+		</div>
+		<div class=" tenth-button ">
+
+			<a th:href="@{../menuinfo/menuinfoAdd}" class="btn btn-lg blue">新增菜单</a>
+		</div>
+		<!--***** CONTENT *****-->
+		<div class="row">
+			<table class="table table-hover">
+				<thead>
+					<tr class="bg-info text-white">
+						<th width="1%">序号</th>
+						<th width="5%">菜单名称</th>
+						<th width="5%">父级名称</th>
+						<th width="5%">菜单级别</th>
+						<th width="5%">菜单排序</th>
+						<th width="5%">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="menu,index: ${menuinfolist}">
+						<td th:text="${index.count}"></td>
+						<td th:text="${menu.menuName}"></td>
+						<td th:text="${menu.menuContent}"></td>
+						<td th:text="${menu.menuLevel}"></td>
+						<td th:text="${menu.menuSort}"></td>
+						<td><a class="btn btn-outline-primary"
+							style="max-width: 75px;"
+							th:href="@{'../menuinfo/menuUpdate?menuId='+${menu.menuId}}"><i
+								class="fa  fa-pencil"></i>修改</a> <a class="btn btn-outline-danger"
+							style="max-width: 75px;" href="javascript:void(0)"
+							th:onclick="'javascript:showMenuToDel('+'\''+${menu.menuId}+'\''+');'">
+								<i class="fa fa-times  "></i>删除
+						</a></td>
+					</tr>
+
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="13">
+							<ul id="pageHTML" class="pagination pull-right"></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+
+	</div>
+
+	<script th:inline="javascript">
+	    var pageHTML = [[${pageHTML}]];
+	    var datajson = [[${data}]];
+	    console.log(datajson);
+		$(document).ready(function () {
+			$("#pageHTML").html(pageHTML);
+			
+			if (datajson.menuTop != null && datajson.menuTop != '') {
+
+				$("#menuTop").val(datajson.menuTop);
+				$.ajax({
+					url : "../menuinfo/getMenuinfoNext?menuParent="+$("#menuTop").val(),
+					type : "post",
+					processData : false,
+					contentType : false,
+					async : false,
+					//使用同步的方式,true为异步方式
+					success : function(msg) {
+						$("#city").empty();
+						$("#city").append("<option value=''>请选择</option>");
+						for (i = 0; i < msg.length; i++) {
+							var dict = msg[i];
+							$("#city").append(
+									"<option value='" + dict.menuId + "'>"
+											+ dict.menuName
+											+ "</option>");
+						}
+						 $("#city").val(datajson.menuParent); 
+					},
+					error : function() {
+						alert("系统异常！");
+					}
+				});
+			}
+			
+		});
+		
+		
+		function showMenuToDel(qid) {
+		    if (confirm("确定删除此条信息?")) {
+		        $.ajax({
+		            url: "../menuinfo/doDelMenu?menuId="+qid,
+		            type: "post",
+		          
+		            processData: false,
+		            contentType: false,
+		            success: function(msg) {
+		                if (msg.code == 500) {
+		                    //表示失败
+		                    alert("删除信息失败！");
+		                } else {
+		                	 self.location = '../menuinfo/loadMenuinfoList_0_0_0';
+		                }
+
+		            },
+		            error: function() {
+		                alert("系统异常！");
+		            }
+		        });
+		    }
+		}
+		function SaveAnswer() {
+		    var formData = new FormData($("#filesave")[0]);
+		    var urlstr = "../Question/doQuestioninfoImport";
+		    
+		    $.ajax({
+		        url: urlstr,
+		        type: "post",
+		        data: formData,
+		        async: false,
+		        cache: false,
+		        contentType: false,
+		        processData: false,
+		        dataType: 'json',
+		        success: function(data) {
+		        	alert( data.msg);
+	        		window.location.reload();
+		            layer.close(index);
+		        },
+		        error: function() {
+		            alert("系统异常！");
+		        }
+		    });
+		}
+		function provicechoose() {
+			$.ajax({
+				url : "../menuinfo/getMenuinfoNext?menuParent="
+						+ $("#menuTop").val(),
+				type : "post",
+				processData : false,
+				contentType : false,
+				success : function(msg) {
+					$("#city").empty();
+					$("#city").append("<option value=''>请选择</option>");
+					for (i = 0; i < msg.length; i++) {
+						var dict = msg[i];
+						/* th:value="${menu.menuId}" th:text="${menu.menuName }" */
+						$("#city").append(
+								"<option value='" + dict.menuId + "'>"
+										+ dict.menuName + "</option>");
+					}
+				},
+				error : function() {
+					alert("系统异常！");
+				}
+			});
+
+		}
+
+</script>
+
+</body>
+
+
+</html>

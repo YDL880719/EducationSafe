@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+<!-- Core stylesheets -->
+<link rel="stylesheet" th:href="@{/css/ui-elements/card.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<div th:include="headerdiv"></div>
+	<div th:include="leftnav"></div>
+	<div class="content-inner">
+
+		<div class="row" id="report1">
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-block">
+						<div id="container4"
+							style="min-width: 400px; width: 100%; height: 400px; margin: 0px;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-block">
+						<div id="container5"
+							style="min-width: 400px; width: 100%; height: 400px; margin: 0px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="report2">
+			<div class="col-md-4" style="max-width: 100%; flex: 0 0 100%">
+				<div class="card card-c1">
+					<div id="container6"
+						style="width: 100%; height: 400px; margin: 0 auto"></div>
+				</div>
+			</div>
+
+		</div>
+		<!--***** REPORT-2 *****-->
+		<div class="row" id="report2">
+			<div class="col-md-4" style="max-width: 100%; flex: 0 0 100%">
+				<div class="card card-c1">
+					<div id="container3"
+						style="width: 100%; height: 400px; margin: 0 auto"></div>
+				</div>
+			</div>
+
+		</div>
+		<div class="row" id="report2">
+			<div class="col-md-4" style="max-width: 100%; flex: 0 0 100%">
+				<div class="card card-c1">
+					<div id="container1"
+						style="width: 100%; height: 400px; margin: 0 auto"></div>
+				</div>
+			</div>
+
+		</div>
+		<div class="row" id="report2">
+			<div class="col-md-4" style="max-width: 100%; flex: 0 0 100%">
+				<div class="card card-c1">
+					<div id="container2"
+						style="width: 100%; height: 400px; margin: 0 auto"></div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+
+
+	</div>
+
+	<!--Core Javascript -->
+	<script type="text/javascript"
+		th:src="@{/js/highcharts/modules/highcharts.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js/highcharts/modules/exporting.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js/highcharts/modules/map.js}"></script>
+	<script type="text/javascript" th:src="@{/js/highcharts/china.js}"></script>
+	<!--Core Javascript -->
+	<script th:src="@{/js/mychart.js}"></script>
+	<script th:inline="javascript">
+	
+
+
+var arealist = [[${categorylist}]];
+
+var arealistlength  = arealist.length;
+var arrarea = new Array(arealistlength);
+var arrarea2 = new Array(1);
+var arrareadata = new Array(arealistlength);
+var arrareadata2 = new Array(1);
+for(var n = 0 ;n<arealistlength ;n++){
+	arrarea [n] = arealist[n].categoryName;
+	arrareadata[n] = Number(arealist[n].isTrue);
+}
+arrarea2 [0] = new Array();
+var object2area = {'categories': 1};
+object2area["categories"]=arrarea;
+
+object2area["startOnTick"]=true;
+object2area["endOnTick"]=true;
+
+arrareadata2 [0] = new Array();
+var objectarea = {};
+objectarea["name"]="节目量";
+objectarea["data"]=arrareadata;
+arrareadata2 [0] =objectarea;
+	
+arrarea2 [0]=object2area;
+var chart3;
+chart3 = new Highcharts.Chart({
+	chart: {
+		 renderTo: 'container3', //关联页面元素div#id
+		 type: 'column',
+	        defaultSeriesType: 'bar' //图表类型line, spline, area, areaspline, column, bar, pie 
+	},
+	title: {
+		text: '按照十大栏目统计'
+	},
+	subtitle: {
+		text: '数据来源: 中安传媒'
+	},
+	xAxis: arrarea2,
+	yAxis: {
+		title: {
+			text: '节目量 (期)'
+		}
+	},
+	plotOptions: {
+		bar: {
+			dataLabels: {
+				enabled: true,
+				allowOverlap: true // 允许数据标签重叠
+			}
+		}
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'top',
+		x: -40,
+		y: 100,
+		floating: true,
+		borderWidth: 1,
+		backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+		shadow: true
+	},
+	credits: { 
+		text: '中安传媒',
+		href: 'http://www.zacm.org/'
+	},
+	series: arrareadata2
+	
+});
+var chart2 = new Highcharts.Chart({
+	chart: {
+		 renderTo: 'container2', //关联页面元素div#id
+	        defaultSeriesType: 'areaspline' //图表类型line, spline, area, areaspline, column, bar, pie 
+	},
+	title: {
+		text: '按照十大栏目统计'
+	},
+	subtitle: {
+		text: '数据来源: 中安传媒'
+	},
+	xAxis: arrarea2,
+	yAxis: {
+		title: {
+			text: '节目量 (期)'
+		}
+	},
+	plotOptions: {
+		bar: {
+			dataLabels: {
+				enabled: true,
+				allowOverlap: true // 允许数据标签重叠
+			}
+		}
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'top',
+		x: -40,
+		y: 100,
+		floating: true,
+		borderWidth: 1,
+		backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+		shadow: true
+	},
+	credits: { 
+		text: '中安传媒',
+		href: 'http://www.zacm.org/'
+	},
+	series: arrareadata2
+	
+});
+
+
+var menulist = [[${menulist}]];
+
+var menulistlength  = menulist.length;
+var arrmenu = new Array(menulistlength);
+var arrmenu2 = new Array(1);
+var arrmenudata = new Array(menulistlength);
+var arrmenudata2 = new Array(1);
+for(var n = 0 ;n<menulistlength ;n++){
+	arrmenu [n] = menulist[n].menuName;
+	arrmenudata[n] = Number(menulist[n].isTrue);
+}
+arrmenu2 [0] = new Array();
+var object2menu = {'categories': 1};
+object2menu["categories"]=arrmenu;
+
+object2menu["startOnTick"]=true;
+object2menu["endOnTick"]=true;
+
+arrmenudata2 [0] = new Array();
+var objectmenu = {};
+objectmenu["name"]="节目量";
+objectmenu["data"]=arrmenudata;
+arrmenudata2 [0] =objectmenu;
+	
+arrmenu2 [0]=object2menu;
+var chart3;
+chart3 = new Highcharts.Chart({
+	chart: {
+		 renderTo: 'container1', //关联页面元素div#id
+		 type: 'column',
+	        defaultSeriesType: 'bar' //图表类型line, spline, area, areaspline, column, bar, pie 
+	},
+	title: {
+		text: '按照九大行业统计'
+	},
+	subtitle: {
+		text: '数据来源: 中安传媒'
+	},
+	xAxis: arrmenu2,
+	yAxis: {
+		title: {
+			text: '节目量 (期)'
+		}
+	},
+	plotOptions: {
+		bar: {
+			dataLabels: {
+				enabled: true,
+				allowOverlap: true // 允许数据标签重叠
+			}
+		}
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'top',
+		x: -40,
+		y: 100,
+		floating: true,
+		borderWidth: 1,
+		backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+		shadow: true
+	},
+	credits: { 
+		text: '中安传媒',
+		href: 'http://www.zacm.org/'
+	},
+	series: arrmenudata2
+	
+});
+var xllist = [[${menulist2}]];
+var xllistlength  = xllist.length;
+	var arrxl = new Array(xllistlength);
+	var arr2xl = new Array(1);
+	var arrdataxl = new Array(xllistlength);
+	var arrdata2xl = new Array(1);
+	for(var n = 0 ;n<xllistlength ;n++){
+		
+		arr2xl [0] = new Array();
+		var object2xl = {};
+		object2xl["name"]=xllist[n].menuName;
+		object2xl["y"]=Number(xllist[n].isTrue);
+		if(n==0){
+			object2xl["sliced"]=true;
+			object2xl["selected"]=true;
+		}
+		arrdataxl[n] = object2xl;
+		
+		
+	}
+	
+	
+	arrdata2xl [0] = new Array();
+	var objectxl = {};
+	objectxl["name"]="播放时长（分钟）";
+	objectxl["colorByPoint"]=true;
+	objectxl["data"]=arrdataxl;
+	arrdata2xl [0] =objectxl;
+var chart7 = new Highcharts.Chart({
+	chart: {
+		 renderTo: 'container4', //关联页面元素div#id
+	        defaultSeriesType: 'pie', //图表类型line, spline, area, areaspline, column, bar, pie
+	        plotBackgroundColor: null,
+			plotBorderWidth: null,
+			plotShadow: false,
+	},
+	title: {
+		text: '按照九大行业播放量统计'
+	},
+	subtitle: {
+		text: '数据来源: 中安传媒'
+	},
+	tooltip: {
+		pointFormat: '{series.name}: <b>{point.y}分</b>'
+	},
+	
+	plotOptions: {
+		pie: {
+			allowPointSelect: true,
+			cursor: 'pointer',
+			dataLabels: {
+				enabled: true,
+				format: '<b>{point.name}</b>:{point.y}分',
+				
+				style: {
+					color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+				}
+			},
+			showInLegend: true
+		}
+	
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'top',
+		x: -40,
+		y: 100,
+		floating: true,
+		
+		shadow: true
+	},
+	credits: { 
+		text: '中安传媒',
+		href: 'http://www.zacm.org/'
+	},
+	series: arrdata2xl
+	
+});
+
+var xllist2 = [[${categorylist2}]];
+var xllistlength2  = xllist2.length;
+	var arrxl2 = new Array(xllistlength2);
+	var arr2xl2 = new Array(1);
+	var arrdataxl2 = new Array(xllistlength2);
+	var arrdata2xl2 = new Array(1);
+	for(var n = 0 ;n<xllistlength2 ;n++){
+		
+		arr2xl [0] = new Array();
+		var object2xl = {};
+		object2xl["name"]=xllist2[n].categoryName;
+		object2xl["y"]=Number(xllist2[n].isTrue);
+		if(n==0){
+			object2xl["sliced"]=true;
+			object2xl["selected"]=true;
+		}
+		arrdataxl2[n] = object2xl;
+		
+		
+	}
+	
+	
+	arrdata2xl2 [0] = new Array();
+	var objectxl2 = {};
+	objectxl2["name"]="播放时长（分钟）";
+	objectxl2["colorByPoint"]=true;
+	objectxl2["data"]=arrdataxl2;
+	arrdata2xl2 [0] =objectxl2;
+var chart8 = new Highcharts.Chart({
+	chart: {
+		 renderTo: 'container5', //关联页面元素div#id
+	        defaultSeriesType: 'pie', //图表类型line, spline, area, areaspline, column, bar, pie
+	        plotBackgroundColor: null,
+			plotBorderWidth: null,
+			plotShadow: false,
+	},
+	title: {
+		text: '按照十大栏目播放量统计'
+	},
+	subtitle: {
+		text: '数据来源: 中安传媒'
+	},
+	tooltip: {
+		pointFormat: '{series.name}: <b>{point.y}分</b>'
+	},
+	
+	plotOptions: {
+		pie: {
+			allowPointSelect: true,
+			cursor: 'pointer',
+			dataLabels: {
+				enabled: true,
+				format: '<b>{point.name}</b>:{point.y}分',
+				
+				style: {
+					color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+				}
+			},
+			showInLegend: true
+		}
+	
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'top',
+		x: -40,
+		y: 100,
+		floating: true,
+		
+		shadow: true
+	},
+	credits: { 
+		text: '中安传媒',
+		href: 'http://www.zacm.org/'
+	},
+	series: arrdata2xl2
+	
+});
+
+
+var mlist6 = [[${menulist3}]];//数据
+var mlist = [[${menulist4}]];//行业数据
+
+var mlist6length  = mlist6.length;
+var arrmenu6 = new Array(0);
+var arrmenu26 = new Array(1);
+var arrmenudata6 = new Array(0);
+var arrmenudata26 = new Array(0);
+
+
+
+
+var map = {};
+for(var i=0;i<mlist.length;i++){
+	var sid = mlist[i].menuId+'';
+	arrmenudata6 = new Array(0);
+	map[sid] = arrmenudata6;
+}
+
+
+for(var n = 0 ;n<mlist6length ;n++){
+	var objectmenu = {};
+	if(arrmenu6.indexOf(mlist6[n].menuContent) == -1){
+		arrmenu6 .push(mlist6[n].menuContent);
+		for(var key in map){
+			 if(key == mlist6[n].menuId){
+				 map[key] .push(mlist6[n].menuLevel);
+			} 
+		}
+		
+	}else{
+		for(var key in map){
+			 if(key == mlist6[n].menuId){
+				 map[key] .push(mlist6[n].menuLevel);
+			}
+		}
+	}
+}
+
+var arr0 = new Array(0);
+for(var i=0;i<arrmenu6.length;i++){
+	arr0[i] = 0;
+}
+for(var key in map){
+	var objectmenu = {};
+	for(var i=0;i<mlist.length;i++){
+		if(key == mlist[i].menuId){
+			 objectmenu["name"]=mlist[i].menuName; 
+			 if( map[key].length < arrmenu6.length){
+				  map[key]=map[key].concat(arr0.slice(map[key].length));
+			 }
+			 objectmenu["data"]=map[key]; 
+		}
+	}
+	
+	arrmenudata26.push(objectmenu);
+}
+
+var object26menu = {'categories': 1};
+object26menu["categories"]=arrmenu6;
+object26menu["startOnTick"]=true;
+object26menu["endOnTick"]=true;
+arrmenu26 [0]=object26menu;
+
+
+var chart = Highcharts.chart('container6', {
+	chart: {
+		type: 'spline'
+	},
+	title: {
+		text: '九大行业日播放量'
+	},
+	subtitle: {
+		text: '数据来源: 中安传媒'
+	},
+	xAxis: arrmenu26,
+	yAxis: {
+		title: {
+			text: '时长（分）'
+		}
+	},
+	
+	tooltip: {
+		shared: true,
+		crosshairs: true,
+		// 时间格式化字符
+		// 默认会根据当前的数据点间隔取对应的值
+		// 当前图表中数据点间隔为 1天，所以配置 day 值即可
+		dateTimeLabelFormats: {
+			day: '%Y-%m-%d'
+		}
+	},
+	plotOptions: {
+		series: {
+			cursor: 'pointer',
+			point: {
+				events: {
+					// 数据点点击事件
+					// 其中 e 变量为事件对象，this 为当前数据点对象
+					click: function (e) {
+						$('.message').html( Highcharts.dateFormat('%Y-%m-%d', this.x) + ':<br/>  访问量：' +this.y );
+					}
+				}
+			},
+			marker: {
+				lineWidth: 1
+			}
+		}
+	},
+	credits: { 
+		text: '中安传媒',
+		href: 'http://www.zacm.org/'
+	},
+	series: arrmenudata26
+});
+
+
+</script>
+
+
+</body>
+
+
+</html>

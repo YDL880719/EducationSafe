@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+<title>国家安全生产宣教培训平台</title>
+<!-- global stylesheets -->
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/css/font-icon-style.css}">
+<link rel="stylesheet" th:href="@{/css/style.default.css}"
+	id="theme-stylesheet">
+
+<!-- Core stylesheets -->
+<link rel="stylesheet" th:href="@{/css/pages/login.css}">
+
+<!--    -->
+<link rel="stylesheet" th:href="@{/css/form.css}">
+
+
+<link rel="stylesheet" th:href="@{/css/ui-elements/button.css}">
+
+<!-- 以下样式用于下拉框多选 -->
+<link rel="stylesheet"
+	th:href="@{/js/multiselect/css/jquery.multiselect.css}" />
+<link rel="stylesheet"
+	th:href="@{/js/multiselect/css/jquery.multiselect.filter.css}" />
+<link rel="stylesheet" th:href="@{/js/multiselect/css/jquery-ui.css}" />
+<link rel="stylesheet" th:href="@{/js/multiselect/assets/style.css}" />
+<link rel="stylesheet" th:href="@{/js/multiselect/assets/prettify.css}" />
+</head>
+<body>
+
+
+	<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+	<div class="page-content d-flex align-items-stretch" id="leftnav"
+		style="float: left;">
+
+		<!--***** SIDE NAVBAR *****-->
+		<nav class="side-navbar">
+			<hr>
+			<!-- Sidebar Navidation Menus-->
+			<ul class="list-unstyled">
+				<!-- <li class="active"><a href="index.html"><i
+						class="fa fa-home"></i>首页</a></li> -->
+				<li><a onclick="pageTo('admin/indexinfo')"> <i
+						class="fa fa-bar-chart"></i>统计信息
+				</a></li>
+				<li><a href="#apps" aria-expanded="false"
+					data-toggle="collapse"> <i class="fa fa-windows"></i>资源管理
+				</a>
+					<ul id="apps" class="collapse list-unstyled">
+						<li><a
+							onclick="pageTo('resourcesinfo/loadResourcesinfoList_0_0_0')">资源台账查询</a></li>
+						<li><a
+							onclick="pageTo('resourcesinfo/loadResourcesinfoList_0_0_0')">资源维护</a></li>
+					</ul></li>
+
+				<li><a href="#forms" aria-expanded="false"
+					data-toggle="collapse"> <i class="fa fa-building-o"></i>企业信息
+				</a>
+					<ul id="forms" class="collapse list-unstyled">
+						<li><a
+							onclick="pageTo('companyinfo/loadCompanyinfoList_0_0_0')">企业列表</a></li>
+						<li><a
+							onclick="pageTo('companyinfo/loadCompanyinfoList_0_0_0')">企业资源管理</a></li>
+					</ul></li>
+				<li><a onclick="pageTo('userinfo/loadUserinfoList_0_0_0')">
+						<i class="fa fa-user"></i>用户管理
+				</a></li>
+				<li><a
+					onclick="pageTo('usercheckinfo/loadUsercheckinfoList_0_0_0')">
+						<i class="fa fa-check"></i>认证管理
+				</a></li>
+				<li><a
+					onclick="pageTo('usermoneyinfo/loadUserMoneyinfoList_0_0_0')">
+						<i class="fa fa-cny"></i>续费管理
+				</a></li>
+				<li><a
+					onclick="pageTo('versioninfo/loadVersioninfoList_0_0_0')"> <i
+						class="fa fa-bars"></i>版本管理
+				</a></li>
+				<li><a href="#pages" aria-expanded="false"
+					data-toggle="collapse"> <i class="fa fa-file-o"></i>数据字典管理
+				</a>
+					<ul id="pages" class="collapse list-unstyled">
+						<li><a onclick="pageTo('areainfo/loadAreainfoList_0_0_0')">区域字典</a></li>
+						<li><a
+							onclick="pageTo('industrycode/loadIndustryCodeList_0_0_0')">行业信息</a></li>
+						<li><a
+							onclick="pageTo('categoryinfo/loadCategoryinfoList_0_0_0')">栏目信息</a></li>
+						<li><a onclick="pageTo('menuinfo/loadMenuinfoList_0_0_0')">菜单管理</a></li>
+					</ul></li>
+				<!-- 
+				<li><a href="#elements" aria-expanded="false"
+					data-toggle="collapse"> <i class="fa fa-globe"></i>UI Elements
+				</a>
+					<ul id="elements" class="collapse list-unstyled">
+						<li><a href="ui-buttons.html">Buttons</a></li>
+						<li><a href="ui-cards.html">Cards</a></li>
+						<li><a href="ui-progressbars.html">Progress Bar</a></li>
+						<li><a href="ui-timeline.html">Timeline</a></li>
+					</ul></li> -->
+			</ul>
+
+		</nav>
+	</div>
+	<!-- jquery vendor -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/tether.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+
+	<script th:src="@{/js/popper/popper.min.js}"></script>
+	<script th:src="@{/js/jquery.cookie.js}"></script>
+	<script th:src="@{/js/jquery.validate.min.js}"></script>
+	<script th:src="@{/js/chart.min.js}"></script>
+	<script th:src="@{/js/front.js}"></script>
+	<!--Core Javascript -->
+	<script th:src="@{/js/mychart.js}"></script>
+
+	<!-- 以下JS用于下拉框多选 -->
+	<script th:src="@{/js/multiselect/assets/prettify.js}"></script>
+	<script th:src="@{/js/multiselect/src/jquery-ui.min.js}"></script>
+	<script th:src="@{/js/multiselect/src/jquery.multiselect.js}"></script>
+	<script th:src="@{/js/multiselect/src/jquery.multiselect.filter.js}"></script>
+	<script type="text/javascript">
+		$(function() {
+			var url = document.URL;
+
+			url = url.replace("http://", "");
+			//$("#menuurl").val(url);
+			if (url.length > 0) {
+				if (url.indexOf('_') != -1) {
+					url = url.substring(url.indexOf(':') + 6, url.indexOf('_'));
+				} else {
+					url = url.substring(url.indexOf(':') + 6, url.length);
+				}
+
+				$('.list-unstyled li ')
+						.each(
+								function() {
+									var listr = $(this);
+									var ahref = listr.children('a').attr(
+											'onclick');
+									if (undefined == ahref) {
+
+									} else {
+										ahref = ahref.substring(ahref
+												.indexOf('(') + 2, ahref
+												.indexOf('_'));
+										var urlstr = url.substring(0, url
+												.indexOf('/'));
+										if (ahref == url
+												|| ahref.indexOf(urlstr) != -1) {
+											listr.addClass('active');
+											listr.parent().addClass('show');
+											listr.children('a').addClass(
+													'active');
+											listr.parent().parent().children(
+													'a').attr("aria-expanded",
+													"true");
+
+										}
+									}
+
+								});
+			}
+		});
+		function pageTo(mpages) {
+			self.location = '../' + mpages;
+		}
+	</script>
+</body>
+</html>

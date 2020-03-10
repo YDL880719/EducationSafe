@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+<title>国家安全生产宣教培训平台</title>
+<!-- global stylesheets -->
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/css/font-icon-style.css}">
+<link rel="stylesheet" th:href="@{/css/style.default.css}"
+	id="theme-stylesheet">
+
+<!-- Core stylesheets -->
+<link rel="stylesheet" th:href="@{/css/pages/login.css}">
+
+<!--    -->
+
+</head>
+<body>
+	<header class="header" id="headerdiv">
+		<nav class="navbar navbar-expand-lg ">
+			<div class="search-box">
+				<button class="dismiss">
+					<i class="icon-close"></i>
+				</button>
+				<form id="searchForm" action="#" role="search">
+					<input type="search" placeholder="Search Now" class="form-control">
+				</form>
+			</div>
+			<div class="container-fluid ">
+				<div
+					class="navbar-holder d-flex align-items-center justify-content-between">
+					<div class="navbar-header">
+						<a href="" class="navbar-brand">
+							<div class="brand-text brand-big hidden-lg-down">
+								<img th:src="@{/img/logo-white.png}" alt="Logo" class="img-fluid">
+							</div>
+						</a>
+					</div>
+				</div>
+				<ul
+					class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+					<li class="nav-item dropdown"><a id="profile"
+						class="nav-link logout" data-target="#" href="#"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+							th:src="@{/img/avatar-1.jpg}" alt="..." class="img-fluid rounded-circle"
+							style="height: 30px; width: 30px;"></a>
+						<ul aria-labelledby="profile" class="dropdown-menu profile">
+							
+							<li><a rel="nofollow" th:href="@{../admin/loginOut}"
+								class="dropdown-item">
+									<div class="notification">
+										<div class="notification-content">
+											<i class="fa fa-power-off"></i>退出登录
+										</div>
+									</div>
+							</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+		<!-- jquery vendor -->
+		<script th:src="@{/js/jquery.min.js}"></script>
+		<script th:src="@{/js/tether.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+
+		<script th:src="@{/js/popper/popper.min.js}"></script>
+		<script th:src="@{/js/jquery.cookie.js}"></script>
+		<script th:src="@{/js/jquery.validate.min.js}"></script>
+		<script th:src="@{/js/chart.min.js}"></script>
+		<script th:src="@{/js/front.js}"></script>
+		<!--Core Javascript -->
+		<script th:src="@{/js/mychart.js}"></script>
+		<script type="text/javascript">
+			$(function() {
+				var url = document.URL;
+
+				url = url.replace("http://", "");
+				//$("#menuurl").val(url);
+				if (url.length > 0) {
+					if (url.indexOf('_') != -1) {
+						url = url.substring(url.indexOf(':') + 6, url
+								.indexOf('_'));
+					} else {
+						url = url.substring(url.indexOf(':') + 6, url.length);
+					}
+
+					console.log("url--" + url);
+					$('.submenu li ')
+							.each(
+									function() {
+
+										var listr = $(this);
+										var ahref = listr.children('a').attr(
+												'onclick');
+										if (undefined == ahref) {
+
+										} else {
+											ahref = ahref.substring(ahref
+													.indexOf('(') + 2, ahref
+													.indexOf('_'));
+											var urlstr = url.substring(0, url
+													.indexOf('/'));
+											if (ahref == url
+													|| ahref.indexOf(urlstr) != -1) {
+												listr.addClass('active');
+												listr.parent().addClass('in');
+												listr.children('a').addClass(
+														'active');
+												listr
+														.parent()
+														.parent()
+														.addClass('active open');
+											}
+										}
+
+									});
+				}
+			});
+			function pageTo(mpages) {
+				self.location = '../' + mpages;
+			}
+		</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" th:href="@{/img/logo-icon.png}">
+
+</head>
+
+<body>
+	<div th:include="headerdiv"></div>
+	<div th:include="leftnav"></div>
+	<div class="content-inner chart-cont">
+
+		<!--***** INLINE FORM *****-->
+		<div class="card form" style="padding: 10px;" id="form6">
+			<form autocomplete="off" class="form-inline"
+				action="loadcategoryinfoList_0_0_0" method="post">
+				<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0"
+					id="categoryName" name="categoryName" placeholder="请输入栏目名称……">
+
+				<!--  <label class="mr-sm-2" for="inlineFormCustomSelect">菜单种类</label>
+                            <select class="custom-select mb-2 mr-sm-2 mb-sm-0"  id="inlineFormCustomSelect">
+                                <option selected>请选择</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select> -->
+				<button type="submit" class="btn btn-general btn-blue ">搜索</button>
+			</form>
+		</div>
+		<div class=" tenth-button ">
+
+			<a th:href="@{../categoryinfo/categoryinfoAdd}" class="btn btn-lg blue">新增菜单</a>
+		</div>
+		<!--***** CONTENT *****-->
+		<div class="row">
+			<table class="table table-hover">
+				<thead>
+					<tr class="bg-info text-white">
+						<th width="1%">序号</th>
+						<th width="5%">栏目名称</th>
+						<th width="5%">栏目排序</th>
+						<th width="5%">是否可用</th>
+						<th width="5%">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="category,index: ${list}">
+						<td th:text="${index.count}"></td>
+						<td th:text="${category.categoryName}"></td>
+						<td th:text="${category.categorySort}"></td>
+						<td th:text="${category.isTrue == 0 ?'否':'是'}"></td>
+						<td>
+						<a class="btn btn-outline-primary" style="    max-width: 75px;"
+							th:href="@{'../categoryinfo/categoryUpdate?categoryId='+${category.categoryId}}"><i
+								class="fa  fa-pencil"></i>修改</a> 
+						<!-- <a
+							class="btn btn-outline-danger" style="    max-width: 75px;"
+							href="javascript:void(0)"
+							th:onclick="'javascript:showcategoryToDel('+'\''+${category.categoryId}+'\''+');'">
+								<i class="fa fa-times  "></i>删除
+						</a> --></td>
+					</tr>
+
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="13">
+							<ul id="pageHTML" class="pagination pull-right"></ul>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+
+	</div>
+
+	<script th:inline="javascript">
+	    var pageHTML = [[${pageHTML}]];
+	    console.log(pageHTML);
+		$(document).ready(function () {
+			$("#pageHTML").html(pageHTML);
+		});
+		/* function showcategoryToDel(qid) {
+		    if (confirm("确定删除此条信息?")) {
+		        $.ajax({
+		            url: "../categoryinfo/doDelCategory?categoryId="+qid,
+		            type: "post",
+		          
+		            processData: false,
+		            contentType: false,
+		            success: function(msg) {
+		                if (msg.code == 500) {
+		                    //表示失败
+		                    alert("删除信息失败！");
+		                } else {
+		                	 self.location = '../categoryinfo/loadCategoryinfoList_0_0_0';
+		                }
+
+		            },
+		            error: function() {
+		                alert("系统异常！");
+		            }
+		        });
+		    }
+		} */
+</script>
+
+</body>
+
+
+</html>
